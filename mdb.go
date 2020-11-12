@@ -127,11 +127,21 @@ func (db *DB) Close() error {
 	return nil
 }
 
-// Get .
-func (db *DB) Get(s string) ([]KV, error) {
+// GetMap .
+func (db *DB) GetMap(s string) (map[string]string, error) {
 	db.RLock()
 	defer db.RUnlock()
-	if len(db.db[s]) == 0 {
+	if (len(db.db[s]) == 0 || db.db[s] == nil) {
+		return map[string]string{}, fmt.Errorf("%s", "missing")
+	}
+	return db.db[s], nil
+}
+
+// GetKV .
+func (db *DB) GetKV(s string) ([]KV, error) {
+	db.RLock()
+	defer db.RUnlock()
+	if (len(db.db[s]) == 0 || db.db[s] == nil) {
 		return []KV{}, fmt.Errorf("%s", "missing")
 	}
 	kv := []KV{}

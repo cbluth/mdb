@@ -51,7 +51,7 @@ func main() {
 	db.SetMap("animal", m)
 
 	log.Println(
-		db.Get("animal"),
+		db.GetKV("animal"),
 	)
 }
 ```
